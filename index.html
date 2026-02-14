@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Wanna ❤️</title>
+    <style>
+        :root {
+            --primary: #ff4d6d;
+            --secondary: #c9184a;
+            --bg: #fff0f3;
+            --text: #590d22;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            height: 100vh;
+            overflow: hidden; /* Prevents scrollbars from flying hearts */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Container Card */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.25);
+            text-align: center;
+            z-index: 10;
+            width: 90%;
+            max-width: 400px;
+            border: 2px solid var(--primary);
+            backdrop-filter: blur(5px);
+            animation: slideUp 1s ease forwards;
+            position: relative;
+        }
+
+        /* --- NEW: Photo Section --- */
+        .photo-frame {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1.5rem auto; /* Centers the image */
+            border-radius: 50%; /* Makes it circular */
+            border: 4px solid var(--primary);
+            padding: 3px; /* Space between border and image */
+            background: white;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
+            animation: heartbeat 2s infinite ease-in-out; /* The heartbeat animation */
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures image covers circle without stretching */
+            border-radius: 50%;
+        }
+
+        /* Typography */
+        h1 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
+
+        p {
+            color: var(--text);
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Button */
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 77, 109, 0.5);
+        }
+
+        /* Hidden Message */
+        .hidden-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease-out;
+        }
+
+        .message-text {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--primary);
+            font-style: italic;
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        /* Background Hearts */
+        .heart-bg {
+            position: absolute;
+            color: var(--primary);
+            opacity: 0.5;
+            top: 105vh; /* Start below screen */
+            animation: floatUp linear infinite;
+            z-index: 1; /* Behind the card */
+            user-select: none;
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.05); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.05); }
+            60% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="photo-frame">
+            <img src="wanna.jpeg" alt="Wanna" onerror="this.src='https://placehold.co/150x150/ff4d6d/white?text=Put+Img';">
+        </div>
+        <h1>Happy Valentine's Day</h1>
+        <p>Even across the distance, you are the closest thing to my heart.</p>
+        
+        <div class="hidden-content" id="secretMessage">
+            <p class="message-text">
+                "Every text, every time spent together,  every goal I chase, starts with the thought of building a future for us. I love you, Wanna."
+            </p>
+        </div>
+
+        <button class="btn" onclick="revealMessage()">Tap for a Surprise</button>
+    </div>
+
+    <script>
+        // 1. Spawns background hearts
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-bg');
+            heart.innerHTML = Math.random() > 0.5 ? '❤️' : '💖'; // Randomize emoji
+            
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            
+            const duration = Math.random() * 5 + 3; 
+            heart.style.animationDuration = duration + 's';
+            
+            document.body.appendChild(heart);
+
+            setTimeout(() => { heart.remove(); }, duration * 1000);
+        }
+        setInterval(createFloatingHeart, 400);
+
+        // 2. Reveal Button Logic
+        function revealMessage() {
+            const content = document.getElementById('secretMessage');
+            const btn = document.querySelector('.btn');
+            
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                btn.textContent = "Tap for a Surprise";
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                btn.textContent = "Close Message";
+                spawnExplosion();
+            }
+        }
+
+        // 3. Click/Tap Explosion Effect
+        function spawnExplosion() {
+            // Center of screen explosion
+            for(let i=0; i<20; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.style.position = 'fixed';
+                heart.style.left = '50%';
+                heart.style.top = '50%';
+                heart.style.fontSize = '20px';
+                heart.style.transition = 'all 1s ease-out';
+                heart.style.zIndex = '100';
+                document.body.appendChild(heart);
+
+                // Explode in random directions
+                setTimeout(() => {
+                    const x = (Math.random() - 0.5) * 400;
+                    const y = (Math.random() - 0.5) * 400;
+                    heart.style.transform = `translate(${x}px, ${y}px) scale(0)`;
+                    heart.style.opacity = '0';
+                }, 50);
+
+                setTimeout(() => heart.remove(), 1000);
+            }
+        }
+    </script>
+</body>
+</html>
